@@ -1,0 +1,50 @@
+name: 'AI Doc Generator'
+description: '自动为代码生成中文注释和文档'
+author: 'DocGenerator'
+
+branding:
+  icon: 'file-text'
+  color: 'orange'
+
+inputs:
+  api_key:
+    description: 'DeepSeek API Key'
+    required: true
+  model:
+    description: 'DeepSeek 模型名'
+    required: false
+    default: 'deepseek-chat'
+  base_url:
+    description: 'API 端点'
+    required: false
+    default: 'https://api.deepseek.com/v1'
+  review_scope:
+    description: '审查范围: full=全量审查, changed=仅变更文件'
+    required: false
+    default: 'changed'
+  language:
+    description: '输出语言'
+    required: false
+    default: 'zh-CN'
+  max_tokens:
+    description: '最大输出 token 数'
+    required: false
+    default: '2000'
+
+runs:
+  using: 'composite'
+  steps:
+    - run: |
+        node ${{ github.action_path }}/dist/index.js
+      shell: bash
+      env:
+        INPUT_API_KEY: ${{ inputs.api_key }}
+        INPUT_MODEL: ${{ inputs.model }}
+        INPUT_BASE_URL: ${{ inputs.base_url }}
+        INPUT_REVIEW_SCOPE: ${{ inputs.review_scope }}
+        INPUT_LANGUAGE: ${{ inputs.language }}
+        INPUT_MAX_TOKENS: ${{ inputs.max_tokens }}
+        GITHUB_TOKEN: ${{ github.token }}
+        GITHUB_EVENT_PATH: ${{ github.event_path }}
+        GITHUB_REPOSITORY: ${{ github.repository }}
+        GITHUB_EVENT_NAME: ${{ github.event_name }}
