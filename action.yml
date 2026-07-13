@@ -2,8 +2,8 @@ name: AI Doc Generator
 description: 自动为代码生成中文注释和文档
 author: DocGenerator
 branding:
-  icon: zap
-  color: purple
+  icon: 'zap'
+  color: 'purple'
 inputs:
   api_key:
     description: DeepSeek API Key
